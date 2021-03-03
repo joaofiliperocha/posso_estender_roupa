@@ -267,15 +267,37 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       Row(
                                                         children: [
                                                           Text(
-                                                              "Tempo para dia ${day['date']}  ..."),
-                                                          Image.network(
-                                                              "https:${day['day']['condition']['icon']}"),
+                                                            "Posso estender a roupa no dia ${day['date']}  ...",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          if (day['day'][
+                                                                  'daily_will_it_rain'] !=
+                                                              0)
+                                                            Image.asset(
+                                                              'images/clothes-line-no.png',
+                                                              height: 64,
+                                                              width: 64,
+                                                            )
+                                                          else
+                                                            Image.asset(
+                                                              'images/clothes-line-yes.png',
+                                                              height: 64,
+                                                              width: 64,
+                                                            ),
                                                         ],
                                                       ),
                                                       Row(
                                                         children: [
                                                           Text(
-                                                              "Probabilidade de chuva ${day['day']['daily_chance_of_rain']} %")
+                                                            "Probabilidade de chuva ${day['day']['daily_chance_of_rain']} %",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          )
                                                         ],
                                                       )
                                                     ]),
@@ -291,6 +313,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                               child: charts.TimeSeriesChart(
                                                 snapshot.data.chartData,
                                                 animate: true,
+                                                primaryMeasureAxis: new charts
+                                                        .NumericAxisSpec(
+                                                    tickProviderSpec: new charts
+                                                            .BasicNumericTickProviderSpec(
+                                                        desiredTickCount: 4)),
+                                                domainAxis: new charts
+                                                        .DateTimeAxisSpec(
+                                                    tickFormatterSpec: new charts
+                                                            .AutoDateTimeTickFormatterSpec(
+                                                        day: new charts
+                                                                .TimeFormatterSpec(
+                                                            format: 'dd/MM',
+                                                            transitionFormat:
+                                                                'dd/MM'))),
                                                 behaviors: [
                                                   new charts.SeriesLegend(
                                                     position: charts
